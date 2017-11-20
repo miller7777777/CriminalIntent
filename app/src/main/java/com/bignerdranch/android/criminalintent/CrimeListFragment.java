@@ -68,6 +68,8 @@ public class CrimeListFragment extends Fragment {
         }
     }
 
+
+
     private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder>{
 
         private List<Crime> mCrimes;
@@ -81,6 +83,17 @@ public class CrimeListFragment extends Fragment {
 
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
             return new CrimeHolder(layoutInflater, parent);
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+
+            if(mCrimes.get(position).isRequiresPolice()){
+                return 1;
+            }else {
+                return 0;
+            }
+
         }
 
         @Override
