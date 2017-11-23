@@ -5,10 +5,17 @@
               android:layout_height="wrap_content"
               android:padding="8dp">
 
-    <include
+    <TextView
+        android:id="@+id/crime_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/list_item_common"/>
+        android:text="Crime Title"/>
+
+    <TextView
+        android:id="@+id/crime_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Crime Date"/>
 
     <Button
         android:id="@+id/call_police_button"
