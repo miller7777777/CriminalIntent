@@ -28,7 +28,7 @@ public class CrimeLab {
             crime.setTitle("Crime # " + i);
             crime.setSolved(i / 2 == 0);
 //            crime.setRequiresPolice(i / 2 == 0);
-            crime.setRequiresPolice(Math.random() >= 0.9);
+//            crime.setRequiresPolice(Math.random() >= 0.9);
             mCrimes.add(crime);
         }
     }
