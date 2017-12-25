@@ -8,7 +8,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import java.util.List;
 import java.util.UUID;
@@ -39,6 +42,7 @@ public class CrimePagerActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.crime_view_pager);
         mCrimes = CrimeLab.get(this).getCrimes();
         FragmentManager fragmentManager = getSupportFragmentManager();
+//        ActionBar actionBar = getSupportActionBar();
         mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
             @Override
             public Fragment getItem(int position) {
@@ -58,5 +62,11 @@ public class CrimePagerActivity extends AppCompatActivity {
                 break;
             }
         }
+
+
+
     }
+
+
+
 }
