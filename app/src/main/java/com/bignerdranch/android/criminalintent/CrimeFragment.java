@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -69,8 +70,14 @@ public class CrimeFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_crime, container, false);
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(mCrime.getTitle());
+        //Почему заголовок и поле mTitleField не совпадают??
+//        Log.d("EEE", mCrime.getTitle() + " 2");
+
         mTitleField = (EditText) v.findViewById(R.id.crime_title);
         mTitleField.setText(mCrime.getTitle());
+//        Log.d("EEE", mCrime.getTitle() + " 1");
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
@@ -103,7 +110,8 @@ public class CrimeFragment extends Fragment{
             }
         });
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(mCrime.getTitle());
+
+
         return v;
     }
 
