@@ -2,6 +2,7 @@ package com.bignerdranch.android.criminalintent;
 
 
 import android.app.ActionBar;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -39,6 +40,7 @@ public class CrimeFragment extends Fragment{
 
 
     private static final String ARG_CRIME_ID = "crime_id";
+    private static final String DIALOG_DATE = "DialogDate";
 
     public static CrimeFragment newInstance(UUID crimeID){
         Bundle args = new Bundle();
@@ -99,7 +101,15 @@ public class CrimeFragment extends Fragment{
 
         mDateButton = (Button) v.findViewById(R.id.crime_date);
         mDateButton.setText(mCrime.getDate().toString());
-        mDateButton.setEnabled(false);
+//        mDateButton.setEnabled(false);
+        mDateButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                android.support.v4.app.FragmentManager manager = getFragmentManager();
+                DatePickerFragment dialog = new DatePickerFragment();
+                dialog.show(manager, DIALOG_DATE);
+            }
+        });
 
         mSolvedCheckBox = (CheckBox) v.findViewById(R.id.crime_solved);
         mSolvedCheckBox.setChecked(mCrime.isSolved());
@@ -118,6 +128,11 @@ public class CrimeFragment extends Fragment{
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.crime_fragment_menu, menu);
+//        getActivity().getSupportFragmentManager().
+//        if (true) {
+//            menu.getItem(1).setEnabled(false);
+//            menu.getItem(1).setVisible(false);
+//        }
         super.onCreateOptionsMenu(menu, inflater);
     }
 
