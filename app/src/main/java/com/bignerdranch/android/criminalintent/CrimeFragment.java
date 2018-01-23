@@ -61,7 +61,10 @@ public class CrimeFragment extends Fragment{
 
         UUID crimeID = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
 
+        mCrimes = CrimeLab.get(getActivity()).getCrimes();
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeID);
+
+
 
 
     }
@@ -122,12 +125,29 @@ public class CrimeFragment extends Fragment{
 
 
 
+
         return v;
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.crime_fragment_menu, menu);
+
+        if(mCrime.getId().equals(mCrimes.get(0).getId())){
+            Log.d("XXX", "Bingo!");
+            menu.getItem(0).setEnabled(false);
+            menu.getItem(0).setVisible(false);
+
+        }
+
+        if(mCrime.getId().equals(mCrimes.get(mCrimes.size() - 1).getId())){
+            Log.d("XXX", "Bingo!");
+            menu.getItem(1).setEnabled(false);
+            menu.getItem(1).setVisible(false);
+        }
+//        mCrimes = CrimeLab.get(getActivity()).getCrimes();
+//        android.support.v4.app.FragmentManager fm = getActivity().getSupportFragmentManager();
+//        fm.
 //        getActivity().getSupportFragmentManager().
 //        if (true) {
 //            menu.getItem(1).setEnabled(false);
