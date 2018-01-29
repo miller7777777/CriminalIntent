@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -51,6 +52,10 @@ public class DatePickerFragment extends DialogFragment {
 
         mDatePicker = (DatePicker) w.findViewById(R.id.dialog_date_picker);
         mDatePicker.init(year, month, day, null);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mDatePicker.setFirstDayOfWeek(Calendar.MONDAY);
+        }
+
 
         return new AlertDialog.Builder(getActivity())
                 .setView(w)
