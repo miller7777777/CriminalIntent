@@ -41,10 +41,10 @@ public class TimePickerFragment extends DialogFragment {
         final Date date = (Date) getArguments().getSerializable(ARG_DATE);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int hour = calendar.get(Calendar.HOUR);
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
 
 
@@ -52,6 +52,8 @@ public class TimePickerFragment extends DialogFragment {
                 .inflate(R.layout.dialog_time, null);
 
         mTimePicker = (TimePicker) w.findViewById(R.id.dialog_time_picker);
+        mTimePicker.setIs24HourView(true);
+
         mTimePicker.setHour(hour);
         mTimePicker.setMinute(minute);
 
@@ -64,10 +66,11 @@ public class TimePickerFragment extends DialogFragment {
                         int hour = mTimePicker.getHour();
                         int minute = mTimePicker.getMinute();
 //                        Date date = new GregorianCalendar(year, month, day, hour, minute);
+                        Date time = new GregorianCalendar(year, month, day, hour, minute).getTime();
 
 
 
-                        sendResult(Activity.RESULT_OK, date);
+                        sendResult(Activity.RESULT_OK, time);
 
                     }
                 })

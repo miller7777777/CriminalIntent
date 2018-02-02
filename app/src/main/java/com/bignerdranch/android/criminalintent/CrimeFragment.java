@@ -22,6 +22,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -107,7 +108,7 @@ public class CrimeFragment extends Fragment{
         });
 
         mDateButton = (Button) v.findViewById(R.id.crime_date);
-        updateDate();
+//        updateDate();
 //        mDateButton.setEnabled(false);
         mDateButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -121,6 +122,7 @@ public class CrimeFragment extends Fragment{
         });
 
         mTimeButton = (Button) v.findViewById(R.id.crime_time);
+        updateDate();
         mTimeButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -215,5 +217,16 @@ public class CrimeFragment extends Fragment{
 
     private void updateDate() {
         mDateButton.setText(mCrime.getDate().toString());
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(mCrime.getDate());
+
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        mTimeButton.setText(hour + ": " + minute);
+//        mTimeButton.setText("---");
+
+
     }
 }
