@@ -1,9 +1,7 @@
 package com.bignerdranch.android.criminalintent;
 
 
-import android.app.ActionBar;
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -28,13 +26,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import static android.widget.CompoundButton.*;
+import static android.widget.CompoundButton.OnCheckedChangeListener;
+import static android.widget.CompoundButton.OnClickListener;
 
 public class CrimeFragment extends Fragment{
 
     private Crime mCrime;
     private EditText mTitleField;
     private Button mDateButton;
+    private Button mTimeButton;
     private CheckBox mSolvedCheckBox;
     private Menu menu;
     private List<Crime> mCrimes;
@@ -119,6 +119,22 @@ public class CrimeFragment extends Fragment{
                 dialog.show(manager, DIALOG_DATE);
             }
         });
+
+        mTimeButton = (Button) v.findViewById(R.id.crime_time);
+        mTimeButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                android.support.v4.app.FragmentManager manager = getFragmentManager();
+                TimePickerFragment dialog = TimePickerFragment.newInstance(mCrime.getDate());
+                dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
+                dialog.show(manager, DIALOG_DATE);
+
+
+
+            }
+        });
+
+
 
         mSolvedCheckBox = (CheckBox) v.findViewById(R.id.crime_solved);
         mSolvedCheckBox.setChecked(mCrime.isSolved());
