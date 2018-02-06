@@ -27,15 +27,15 @@ public class CrimeLab {
         mCrimes = new ArrayList<>();
         mCrimesMap = new HashMap<>();
 
-        for (int i = 0; i < 100; i++) {
-            Crime crime = new Crime();
-            crime.setTitle("Crime # " + i);
-            crime.setSolved(i / 2 == 0);
-//            crime.setRequiresPolice(i / 2 == 0);
-//            crime.setRequiresPolice(Math.random() >= 0.9);
-            mCrimes.add(crime);
-            mCrimesMap.put(crime.getId(), crime);
-        }
+//        for (int i = 0; i < 100; i++) {
+//            Crime crime = new Crime();
+//            crime.setTitle("Crime # " + i);
+//            crime.setSolved(i / 2 == 0);
+////            crime.setRequiresPolice(i / 2 == 0);
+////            crime.setRequiresPolice(Math.random() >= 0.9);
+//            mCrimes.add(crime);
+//            mCrimesMap.put(crime.getId(), crime);
+//        }
     }
 
     public List<Crime> getCrimes(){
@@ -53,5 +53,10 @@ public class CrimeLab {
 //        }
 //        return null;
         return mCrimesMap.get(id);
+    }
+
+    public void addCrime(Crime c){
+        mCrimes.add(c);
+        mCrimesMap.put(c.getId(), c);
     }
 }
