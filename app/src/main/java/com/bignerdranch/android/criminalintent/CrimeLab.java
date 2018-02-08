@@ -59,4 +59,10 @@ public class CrimeLab {
         mCrimes.add(c);
         mCrimesMap.put(c.getId(), c);
     }
+
+    public void deleteCrime (Crime c){
+
+        mCrimes.remove(c);
+        mCrimesMap.remove(c.getId()); //Проверить, насколько это корректно
+    }
 }
