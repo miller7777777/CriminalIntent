@@ -55,13 +55,16 @@ public class CrimeListFragment extends Fragment {
 
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         List<Crime> crimes = crimeLab.getCrimes();
-        if (mAdapter == null) {
-            mAdapter = new CrimeAdapter(crimes);
-            mCrimeRecyclerView.setAdapter(mAdapter);
-        } else {
-//            mAdapter.notifyDataSetChanged();
-            mAdapter.notifyItemChanged(position);
-        }
+//        if (mAdapter == null) {
+//            mAdapter = new CrimeAdapter(crimes);
+//            mCrimeRecyclerView.setAdapter(mAdapter);
+//        } else {
+////            mAdapter.notifyDataSetChanged();
+//            mAdapter.notifyItemChanged(position);
+//        }
+
+        mAdapter = new CrimeAdapter(crimes);
+        mCrimeRecyclerView.setAdapter(mAdapter);
         updateSubtitle();
 
 
