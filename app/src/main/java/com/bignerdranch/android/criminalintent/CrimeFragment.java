@@ -143,6 +143,10 @@ public class CrimeFragment extends Fragment{
             public void onClick(View view) {
                 CrimeLab.get(getActivity()).deleteCrime(mCrime);
                 mCrimes.remove(mCrime);
+                if(CrimeLab.get(getActivity()).getCrimes().size() == 0){
+                    Intent intent = new Intent(getActivity(), CrimeListActivity.class);
+                    startActivity(intent);
+                }
                 getActivity().finish();
             }
         });
