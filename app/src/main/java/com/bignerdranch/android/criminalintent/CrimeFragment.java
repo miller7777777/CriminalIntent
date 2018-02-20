@@ -184,14 +184,7 @@ public class CrimeFragment extends Fragment{
             menu.getItem(1).setEnabled(false);
             menu.getItem(1).setVisible(false);
         }
-//        mCrimes = CrimeLab.get(getActivity()).getCrimes();
-//        android.support.v4.app.FragmentManager fm = getActivity().getSupportFragmentManager();
-//        fm.
-//        getActivity().getSupportFragmentManager().
-//        if (true) {
-//            menu.getItem(1).setEnabled(false);
-//            menu.getItem(1).setVisible(false);
-//        }
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -240,10 +233,14 @@ public class CrimeFragment extends Fragment{
         int minute = calendar.get(Calendar.MINUTE);
 
         mTimeButton.setText(hour + ": " + minute);
-//        mTimeButton.setText("---");
 
 
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
 
+        CrimeLab.get(getActivity()).updateCrime(mCrime);
+    }
 }
