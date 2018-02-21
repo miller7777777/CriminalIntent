@@ -3,6 +3,7 @@ package com.bignerdranch.android.criminalintent;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.bignerdranch.android.criminalintent.database.CrimeBaseHelper;
@@ -81,5 +82,19 @@ public class CrimeLab {
 
 //        mCrimes.remove(c);
 //        mCrimesMap.remove(c.getId()); //Проверить, насколько это корректно
+    }
+
+    private Cursor queryCrimes(String whereClause, String[] whereArgs){
+        Cursor cursor = mDatabase.query(
+                CrimeTable.NAME,
+                null, // columns - с null выбираются все столбцы
+                whereClause,
+                whereArgs,
+                null,
+                null,
+                null
+        );
+
+        return cursor;
     }
 }
