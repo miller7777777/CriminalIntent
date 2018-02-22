@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.bignerdranch.android.criminalintent.database.CrimeBaseHelper;
+import com.bignerdranch.android.criminalintent.database.CrimeCursorWrapper;
 import com.bignerdranch.android.criminalintent.database.CrimeDbSchema.CrimeTable;
 
 import java.util.ArrayList;
@@ -40,16 +41,43 @@ public class CrimeLab {
     }
 
     public List<Crime> getCrimes(){
+
+        List<Crime> crimes = new ArrayList<>();
+
+        CrimeCursorWrapper cursor = queryCrimes(null, null);
+
+        try{
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                crimes.add(cursor.getCrime());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
 //        return mCrimes;
-        return new ArrayList<>();
+        return crimes;
     }
 
     public Crime getCrime(UUID id){
 
+        CrimeCursorWrapper cursor = queryCrimes(
+                CrimeTable.Cols.UUID + " = ?",
+                new String[] {id.toString()}
+        );
 
+        try {
+            if(cursor.getCount() == 0) {
+                return null;
+            }
+
+            cursor.moveToFirst();
+            return cursor.getCrime();
+        } finally {
+            cursor.close();
+        }
 
 //        return mCrimesMap.get(id);
-        return null;
     }
 
     public void updateCrime(Crime crime){
@@ -84,7 +112,7 @@ public class CrimeLab {
 //        mCrimesMap.remove(c.getId()); //Проверить, насколько это корректно
     }
 
-    private Cursor queryCrimes(String whereClause, String[] whereArgs){
+    private CrimeCursorWrapper queryCrimes(String whereClause, String[] whereArgs){
         Cursor cursor = mDatabase.query(
                 CrimeTable.NAME,
                 null, // columns - с null выбираются все столбцы
@@ -95,6 +123,6 @@ public class CrimeLab {
                 null
         );
 
-        return cursor;
+        return new CrimeCursorWrapper(cursor);
     }
 }

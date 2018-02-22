@@ -55,16 +55,14 @@ public class CrimeListFragment extends Fragment {
 
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         List<Crime> crimes = crimeLab.getCrimes();
-//        if (mAdapter == null) {
-//            mAdapter = new CrimeAdapter(crimes);
-//            mCrimeRecyclerView.setAdapter(mAdapter);
-//        } else {
-////            mAdapter.notifyDataSetChanged();
-//            mAdapter.notifyItemChanged(position);
-//        }
 
-        mAdapter = new CrimeAdapter(crimes);
-        mCrimeRecyclerView.setAdapter(mAdapter);
+        if (mAdapter == null) {
+            mAdapter = new CrimeAdapter(crimes);
+            mCrimeRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.setCrimes(crimes);
+            mAdapter.notifyDataSetChanged();
+        }
         updateSubtitle();
 
 
@@ -175,7 +173,6 @@ public class CrimeListFragment extends Fragment {
 
             position = getAdapterPosition();
 
-//            Toast.makeText(getActivity(), mCrime.getTitle() + " clicked!", Toast.LENGTH_LONG).show();
             Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
             startActivity(intent);
 
@@ -209,16 +206,7 @@ public class CrimeListFragment extends Fragment {
             return new CrimeHolder(layoutInflater, parent);
         }
 
-//        @Override
-//        public int getItemViewType(int position) {
-//
-//            if(mCrimes.get(position).isRequiresPolice()){
-//                return 1;
-//            }else {
-//                return 0;
-//            }
-//
-//        }
+
 
 
 
@@ -235,6 +223,12 @@ public class CrimeListFragment extends Fragment {
             return mCrimes.size();
         }
 
+        public void setCrimes(List<Crime> crimes){
+            mCrimes = crimes;
+        }
+
 
     }
+
+
 }
