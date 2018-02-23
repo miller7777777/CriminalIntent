@@ -13,6 +13,8 @@
     <string name="subtitle_format">%1$d crimes</string>
     <string name="empty_list">СПИСОК ПУСТ</string>
     <string name="delete_crime">delete crime</string>
+    <string name="crime_suspect_text">Choose Suspect</string>
+    <string name="crime_report_text">Send Crime Report</string>
 
     <plurals name="subtitle_plural">
         <item quantity="one">%1$d crime</item>
