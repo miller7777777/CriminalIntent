@@ -12,6 +12,7 @@
     <string name="hide_subtitle">Hide Subtitle</string>
     <string name="subtitle_format">%1$d crimes</string>
     <string name="empty_list">СПИСОК ПУСТ</string>
+    <string name="delete_crime">delete crime</string>
 
     <plurals name="subtitle_plural">
         <item quantity="one">%1$d crime</item>

@@ -2,6 +2,12 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/del_crime"
+        android:icon="@drawable/ic_menu_delete"
+        android:title="@string/delete_crime"
+        app:showAsAction="always|withText"/>
     <item
         android:id="@+id/first_crime"
         app:showAsAction="always|withText"

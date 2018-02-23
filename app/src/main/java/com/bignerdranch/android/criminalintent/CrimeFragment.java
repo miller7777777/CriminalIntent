@@ -62,6 +62,8 @@ public class CrimeFragment extends Fragment{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
 //        mCrime = new Crime();
 //        UUID crimeID = (UUID) getActivity().getIntent().getSerializableExtra(CrimeActivity.EXTRA_CRIME_ID);
 
@@ -174,15 +176,15 @@ public class CrimeFragment extends Fragment{
 
         if(mCrime.getId().equals(mCrimes.get(0).getId())){
             Log.d("XXX", "Bingo!");
-            menu.getItem(0).setEnabled(false);
-            menu.getItem(0).setVisible(false);
+            menu.getItem(1).setEnabled(false);
+            menu.getItem(1).setVisible(false);
 
         }
 
         if(mCrime.getId().equals(mCrimes.get(mCrimes.size() - 1).getId())){
             Log.d("XXX", "Bingo!");
-            menu.getItem(1).setEnabled(false);
-            menu.getItem(1).setVisible(false);
+            menu.getItem(2).setEnabled(false);
+            menu.getItem(2).setVisible(false);
         }
 
         super.onCreateOptionsMenu(menu, inflater);
@@ -206,6 +208,13 @@ public class CrimeFragment extends Fragment{
                 startActivity(mIntent);
 
                 return true;
+            case R.id.del_crime:
+                Toast.makeText(getActivity(), "deleted!", Toast.LENGTH_LONG).show();
+                CrimeLab.get(getContext()).deleteCrime(mCrime);
+                getActivity().finish();
+
+                return true;
+
         }
         return super.onOptionsItemSelected(item);
     }
