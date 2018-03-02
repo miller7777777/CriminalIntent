@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -171,12 +172,27 @@ public class CrimeFragment extends Fragment {
         mReportButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Intent.ACTION_SEND);
-                i.setType("text/plain");
-                i.putExtra(Intent.EXTRA_TEXT, getCrimeReport());
-                i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.crime_report_subject));
-                i = Intent.createChooser(i, getString(R.string.send_report));
-                startActivity(i);
+//                Intent i = new Intent(Intent.ACTION_SEND);
+//                i.setType("text/plain");
+//                i.putExtra(Intent.EXTRA_TEXT, getCrimeReport());
+//                i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.crime_report_subject));
+//                i = Intent.createChooser(i, getString(R.string.send_report));
+//                startActivity(i);
+
+                String mimeType = "text/plain";
+                String title = getString(R.string.crime_report_subject);
+
+                Intent shareIntent = ShareCompat.IntentBuilder.from(getActivity())
+                        .setChooserTitle(title)
+                        .setSubject(title)
+                        .setType(mimeType)
+                        .setText(getCrimeReport())
+                        .getIntent();
+
+                if (shareIntent.resolveActivity(getActivity().getPackageManager()) != null){
+                    startActivity(shareIntent);
+                }
+
             }
         });
 
@@ -195,7 +211,7 @@ public class CrimeFragment extends Fragment {
         }
 
         PackageManager packageManager = getActivity().getPackageManager();
-        if (packageManager.resolveActivity(pickContact, packageManager.MATCH_DEFAULT_ONLY) == null){
+        if (packageManager.resolveActivity(pickContact, packageManager.MATCH_DEFAULT_ONLY) == null) {
             mSuspectButton.setEnabled(false);
         }
 
@@ -277,7 +293,7 @@ public class CrimeFragment extends Fragment {
 
             try {
                 // Проверка получения результатов
-                if (c.getCount() == 0){
+                if (c.getCount() == 0) {
                     return;
                 }
 
