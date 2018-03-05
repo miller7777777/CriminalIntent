@@ -2,6 +2,7 @@ package com.bignerdranch.android.criminalintent;
 
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -45,6 +46,7 @@ public class CrimeFragment extends Fragment {
     private Button mDeleteCrimeButton;
     private Button mReportButton;
     private Button mSuspectButton;
+    private Button mCallButton;
     private CheckBox mSolvedCheckBox;
     private Menu menu;
     private List<Crime> mCrimes;
@@ -192,6 +194,16 @@ public class CrimeFragment extends Fragment {
                 if (shareIntent.resolveActivity(getActivity().getPackageManager()) != null){
                     startActivity(shareIntent);
                 }
+
+            }
+        });
+
+        mCallButton = (Button) v.findViewById(R.id.crime_call);
+
+        mCallButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
 
             }
         });
