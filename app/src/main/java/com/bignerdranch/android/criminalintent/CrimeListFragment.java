@@ -1,6 +1,7 @@
 package com.bignerdranch.android.criminalintent;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,7 +30,19 @@ public class CrimeListFragment extends Fragment {
     private CrimeAdapter mAdapter;
     private int position;
     private boolean mSubtitleVisible;
+    private Callbacks mCallbacks;
     private static final String SAVED_SUBTITLE_VISIBLE = "subtitle";
+
+    //    Обязательный интерфейс для активности-хоста.
+    public interface Callbacks {
+        void onCrimeSelected(Crime crime);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,7 +57,7 @@ public class CrimeListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_crime_list, container, false);
         mCrimeRecyclerView = (RecyclerView) view.findViewById(R.id.crime_recycler_view);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             mSubtitleVisible = savedInstanceState.getBoolean(SAVED_SUBTITLE_VISIBLE);
         }
         updateUI();
@@ -81,14 +94,20 @@ public class CrimeListFragment extends Fragment {
     }
 
     @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_crime_list, menu);
 
         MenuItem subtitleItem = menu.findItem(R.id.show_subtitle);
-        if(mSubtitleVisible){
+        if (mSubtitleVisible) {
             subtitleItem.setTitle(R.string.hide_subtitle);
-        }else {
+        } else {
             subtitleItem.setTitle(R.string.show_subtitle);
 
         }
@@ -96,7 +115,7 @@ public class CrimeListFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.new_crime:
                 Crime crime = new Crime();
                 CrimeLab.get(getActivity()).addCrime(crime);
@@ -114,14 +133,14 @@ public class CrimeListFragment extends Fragment {
         }
     }
 
-    private void updateSubtitle(){
+    private void updateSubtitle() {
 
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         int crimeCount = crimeLab.getCrimes().size();
 //        String subtitle = getString(R.string.subtitle_format, crimeCount);
         String subtitle = getResources()
                 .getQuantityString(R.plurals.subtitle_plural, crimeCount, crimeCount);
-        if(!mSubtitleVisible){
+        if (!mSubtitleVisible) {
             subtitle = null;
         }
 
@@ -130,7 +149,7 @@ public class CrimeListFragment extends Fragment {
 
     }
 
-    private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView mTitleTextView;
         private TextView mDateTextView;
@@ -156,7 +175,7 @@ public class CrimeListFragment extends Fragment {
             mCallPoliceButton = (Button) itemView.findViewById(R.id.call_police_button);
         }
 
-        public void bind(Crime crime){
+        public void bind(Crime crime) {
 
             mCrime = crime;
             mTitleTextView.setText(mCrime.getTitle());
@@ -180,12 +199,11 @@ public class CrimeListFragment extends Fragment {
     }
 
 
-
-    private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder>{
+    private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder> {
 
         private List<Crime> mCrimes;
 
-        public CrimeAdapter(List<Crime> crimes){
+        public CrimeAdapter(List<Crime> crimes) {
             mCrimes = crimes;
         }
 
@@ -207,9 +225,6 @@ public class CrimeListFragment extends Fragment {
         }
 
 
-
-
-
         @Override
         public void onBindViewHolder(CrimeHolder holder, int position) {
 
@@ -223,7 +238,7 @@ public class CrimeListFragment extends Fragment {
             return mCrimes.size();
         }
 
-        public void setCrimes(List<Crime> crimes){
+        public void setCrimes(List<Crime> crimes) {
             mCrimes = crimes;
         }
 
