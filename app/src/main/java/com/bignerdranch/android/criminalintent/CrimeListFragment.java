@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,6 +33,37 @@ public class CrimeListFragment extends Fragment {
     private boolean mSubtitleVisible;
     private Callbacks mCallbacks;
     private static final String SAVED_SUBTITLE_VISIBLE = "subtitle";
+
+    private final ItemTouchHelper.Callback itemTouchHelperCallback = new ItemTouchHelper.Callback() {
+        @Override
+        public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+            return makeMovementFlags(ItemTouchHelper.ACTION_STATE_IDLE, ItemTouchHelper.END);
+        }
+
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+
+            CrimeLab crimeLab = CrimeLab.get(getActivity());
+            List<Crime> crimes = crimeLab.getCrimes();
+            Crime crime = crimes.get(viewHolder.getAdapterPosition());
+            crimeLab.deleteCrime(crime);
+            updateUI();
+
+            if (CrimeLab.get(getActivity()).getCrimes().size() == 0) {
+                Intent intent = new Intent(getActivity(), CrimeListActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+
+        }
+    };
+
+
 
     //    Обязательный интерфейс для активности-хоста.
     public interface Callbacks {
@@ -60,6 +92,10 @@ public class CrimeListFragment extends Fragment {
         if (savedInstanceState != null) {
             mSubtitleVisible = savedInstanceState.getBoolean(SAVED_SUBTITLE_VISIBLE);
         }
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallback);
+        mCrimeRecyclerView.addItemDecoration(itemTouchHelper);
+        itemTouchHelper.attachToRecyclerView(mCrimeRecyclerView);
         updateUI();
         return view;
     }
@@ -247,6 +283,8 @@ public class CrimeListFragment extends Fragment {
 
 
     }
+
+
 
 
 }
